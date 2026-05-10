@@ -5,19 +5,18 @@
 
 import React from "react";
 import { motion } from "motion/react";
-import { 
-  Github, 
-  Linkedin, 
-  ExternalLink, 
-  Network, 
-  IterationCcw, 
-  Database, 
+import {
+  GitGraph,
+  User,
+  Network,
+  IterationCcw,
+  Database,
   Activity,
   ArrowUpRight
 } from "lucide-react";
 
 const Section = ({ title, id, children }: { title: string; id: string; children: React.ReactNode }) => (
-  <motion.section 
+  <motion.section
     id={id}
     initial={{ opacity: 0, y: 20 }}
     whileInView={{ opacity: 1, y: 0 }}
@@ -34,24 +33,24 @@ const Section = ({ title, id, children }: { title: string; id: string; children:
   </motion.section>
 );
 
-const ProjectCard = ({ 
-  title, 
-  problem, 
-  tried, 
-  solution, 
-  tradeoffs, 
-  architecture, 
-  outcome, 
+const ProjectCard = ({
+  title,
+  problem,
+  tried,
+  solution,
+  tradeoffs,
+  architecture,
+  outcome,
   tags,
-  isAI = true 
-}: { 
-  title: string; 
-  problem: string; 
-  tried: string; 
-  solution: string; 
-  tradeoffs: string[]; 
-  architecture: string; 
-  outcome: string; 
+  isAI = true
+}: {
+  title: string;
+  problem: string;
+  tried: string;
+  solution: string;
+  tradeoffs: string[];
+  architecture: string;
+  outcome: string;
   tags: string[];
   isAI?: boolean;
 }) => (
@@ -60,23 +59,23 @@ const ProjectCard = ({
       <h2 className="text-2xl font-bold">{title} {!isAI && <span className="text-outline font-light text-lg ml-2">(No AI)</span>}</h2>
       <span className="tech-tag !bg-primary/10 !text-primary !border-primary/20 scale-110">Production</span>
     </div>
-    
+
     <div className="space-y-4 text-sm leading-relaxed text-on-surface/90">
       <p><strong className="text-primary uppercase text-[10px] tracking-wider mr-2">Problem:</strong> {problem}</p>
       <p><strong className="text-primary uppercase text-[10px] tracking-wider mr-2">Tried:</strong> {tried}</p>
       <p><strong className="text-primary uppercase text-[10px] tracking-wider mr-2">Solution:</strong> {solution}</p>
-      
+
       <div className="py-4 px-5 bg-surface-container/50 rounded-lg border border-outline-variant/20 my-6">
         <strong className="text-primary uppercase text-[10px] tracking-wider block mb-3">Trade-offs:</strong>
         <ul className="list-disc list-inside space-y-1 text-on-surface-variant">
           {tradeoffs.map((item, i) => <li key={i}>{item}</li>)}
         </ul>
       </div>
-      
+
       <p><strong className="text-primary uppercase text-[10px] tracking-wider mr-2">Architecture:</strong> {architecture}</p>
       <p><strong className="text-primary font-bold uppercase text-[10px] tracking-wider mr-2">Outcome:</strong> {outcome}</p>
     </div>
-    
+
     <div className="flex flex-wrap gap-2 mt-8">
       {tags.map(tag => <span key={tag} className="tech-tag">{tag}</span>)}
     </div>
@@ -101,8 +100,8 @@ export default function App() {
           </div>
           <div className="flex items-center gap-8">
             {["About", "Journey", "Systems", "Tooling", "Tech Map"].map((item) => (
-              <button 
-                key={item} 
+              <button
+                key={item}
                 onClick={() => scrollTo(item.toLowerCase().replace(" ", "-"))}
                 className="nav-link cursor-pointer"
               >
@@ -116,7 +115,7 @@ export default function App() {
       <main className="max-w-6xl mx-auto px-6 pt-24 pb-32">
         {/* Header Hero */}
         <header className="mb-32">
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
@@ -222,7 +221,7 @@ export default function App() {
 
         {/* Production Systems */}
         <Section title="Production Systems" id="systems">
-          <ProjectCard 
+          <ProjectCard
             title="Semantic Search for Domain Terminology"
             problem="Executive search platform needed semantic search across profiles, job descriptions, and company data. Standard full-text search (Elasticsearch BM25) and fuzzy matching couldn't handle domain-specific terminology."
             tried="Elasticsearch with synonym dictionaries (became unmaintainable), fuzzy matching (too many false positives), BM25 tuning."
@@ -238,7 +237,7 @@ export default function App() {
             tags={["Python", "FastAPI", "sentence-transformers", "AWS Lambda", "PostgreSQL", "pgvector", ".NET"]}
           />
 
-          <ProjectCard 
+          <ProjectCard
             title="Anomaly Detection for Data Pipeline Quality"
             problem="Multi-tenant data ingestion pipeline processed ~2M records/day. Manual data quality checks became unmaintainable. Percentile-based thresholds broke when client data distributions changed."
             tried="Rule-based validation, statistical thresholds, manual review."
@@ -254,7 +253,7 @@ export default function App() {
             tags={["Python", "scikit-learn", "PostgreSQL", "Redis", "AWS Batch", ".NET"]}
           />
 
-          <ProjectCard 
+          <ProjectCard
             isAI={false}
             title="Multi-Tenant API Platform"
             problem="Built API platform serving 200+ clients with isolated data, varied SLAs, and different rate limits per tenant. Needed horizontal scaling, fault isolation, cost control."
@@ -279,36 +278,36 @@ export default function App() {
           </p>
           <div className="grid sm:grid-cols-2 gap-6">
             {[
-              { 
-                icon: <Network className="w-6 h-6 text-primary" />, 
-                title: "Can dependency injection be made visible?", 
+              {
+                icon: <Network className="w-6 h-6 text-primary" />,
+                title: "Can dependency injection be made visible?",
                 desc: "Static analysis with Roslyn reveals service lifetime conflicts and dependency chains before runtime.",
                 tags: ["TypeScript", "Roslyn"],
                 url: "#"
               },
-              { 
-                icon: <IterationCcw className="w-6 h-6 text-primary" />, 
-                title: "Preventing K8s configuration drift?", 
+              {
+                icon: <IterationCcw className="w-6 h-6 text-primary" />,
+                title: "Preventing K8s configuration drift?",
                 desc: "Side-by-side field-level diffs with visual highlighting make drift immediately obvious.",
                 tags: ["TypeScript", "Helm"],
                 url: "#"
               },
-              { 
-                icon: <Database className="w-6 h-6 text-primary" />, 
-                title: "Serialization for human comprehension?", 
+              {
+                icon: <Database className="w-6 h-6 text-primary" />,
+                title: "Serialization for human comprehension?",
                 desc: "Schema-first formats with visual compression reduce cognitive load during debugging.",
                 tags: ["C#", ".NET 10"],
                 url: "#"
               },
-              { 
-                icon: <Activity className="w-6 h-6 text-primary" />, 
-                title: "Observability validation before deploy?", 
+              {
+                icon: <Activity className="w-6 h-6 text-primary" />,
+                title: "Observability validation before deploy?",
                 desc: "Real-time diagnostics with LSP prevent broken observability pipelines in production.",
                 tags: ["TypeScript", "LSP"],
                 url: "#"
               }
             ].map((tool, i) => (
-              <motion.div 
+              <motion.div
                 key={i}
                 whileHover={{ y: -5 }}
                 className="p-8 bg-surface-container rounded-xl border border-outline-variant hover:bg-surface-high transition-all group relative cursor-pointer"
@@ -388,7 +387,7 @@ export default function App() {
           <div className="max-w-2xl space-y-12">
             <div>
               <p className="text-xl text-on-surface/90 leading-relaxed font-light">
-                <strong className="text-primary font-bold block mb-4 text-2xl font-display">Right now (Q2 2025):</strong> 
+                <strong className="text-primary font-bold block mb-4 text-2xl font-display">Right now (Q2 2025):</strong>
                 Building a VS Code extension for real-time Kubernetes config validation. Integrating pgvector-based semantic search into internal knowledge base. Exploring Roslyn analyzers for detecting async/await anti-patterns in .NET codebases.
               </p>
             </div>
@@ -405,18 +404,18 @@ export default function App() {
         <footer className="pt-24 border-t border-outline-variant flex flex-col md:flex-row justify-between items-center gap-8">
           <div className="text-outline text-[10px] tracking-[0.2em] uppercase font-medium">Surendra Chaluvadi © 2025</div>
           <div className="flex gap-12">
-            <a 
-              href="https://github.com/chaluvadis" 
+            <a
+              href="https://github.com/chaluvadis"
               className="flex items-center gap-2 text-xs text-on-surface-variant hover:text-primary transition-colors tracking-widest uppercase font-bold"
             >
-              <Github className="w-4 h-4" />
+               <GitGraph className="w-4 h-4" />
               GitHub
             </a>
-            <a 
-              href="https://linkedin.com/in/surendra-chaluvadi" 
+            <a
+              href="https://linkedin.com/in/surendra-chaluvadi"
               className="flex items-center gap-2 text-xs text-on-surface-variant hover:text-primary transition-colors tracking-widest uppercase font-bold"
             >
-              <Linkedin className="w-4 h-4" />
+               <User className="w-4 h-4" />
               LinkedIn
             </a>
           </div>
