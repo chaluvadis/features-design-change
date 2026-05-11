@@ -171,22 +171,44 @@ const BlogPostView = () => {
 
   if (!post) {
     return (
-      <div className="max-w-4xl mx-auto pt-12 text-center">
-        <h1 className="text-4xl font-bold mb-8">Post not found in index</h1>
-        <button onClick={() => navigate("/blogs")} className="text-accent-blue font-bold uppercase tracking-widest text-xs">Return to Blog</button>
+      <div className="max-w-4xl mx-auto pt-24 text-center">
+        <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-surface-high border border-outline-variant mb-8">
+          <BookOpen className="w-8 h-8 text-outline" />
+        </div>
+        <h1 className="text-4xl font-bold mb-4">Post not found</h1>
+        <p className="text-on-surface-variant mb-12 font-light">The piece you're looking for might have been moved or renamed.</p>
+        <button 
+          onClick={() => navigate("/blogs")} 
+          className="text-primary font-bold uppercase tracking-widest text-xs border border-primary/20 px-8 py-4 rounded-full hover:bg-primary/5 transition-all"
+        >
+          Return to All Writings
+        </button>
       </div>
     );
   }
 
   return (
     <div className="max-w-4xl mx-auto pt-12">
-      <button 
-        onClick={() => navigate("/blogs")}
-        className="flex items-center gap-2 text-outline hover:text-primary transition-colors mb-12 group"
-      >
-        <ChevronLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
-        Back to list
-      </button>
+      <div className="mb-16">
+        <button 
+          onClick={() => navigate("/blogs")}
+          className="flex items-center gap-2 text-outline hover:text-primary transition-colors mb-12 group text-xs font-bold uppercase tracking-widest"
+        >
+          <ChevronLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
+          Back to list
+        </button>
+
+        <div className="space-y-6 mb-16">
+          <div className="flex items-center gap-4 text-[10px] text-outline uppercase tracking-[0.2em] font-bold">
+            <span className="text-primary/60">{post.date}</span>
+            <span className="w-1 h-1 rounded-full bg-outline-variant"></span>
+            <span>{post.readTime}</span>
+          </div>
+          <h1 className="text-4xl md:text-6xl font-bold tracking-tighter leading-[1.1]">
+            {post.title}
+          </h1>
+        </div>
+      </div>
 
       {loading ? (
         <div className="animate-pulse space-y-8">
@@ -217,33 +239,53 @@ const BlogList = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="pt-12">
-      <div className="flex justify-between items-center mb-24">
-        <h1 className="text-4xl md:text-6xl font-bold">Writings</h1>
+    <div className="pt-12 max-w-5xl mx-auto">
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-24">
+        <div>
+          <h1 className="text-5xl md:text-7xl font-bold tracking-tighter mb-4">Writings</h1>
+          <p className="text-on-surface-variant text-lg font-light max-w-xl">
+            Technical deep dives into distributed systems, engineering culture, and selective AI integration.
+          </p>
+        </div>
         <Link 
           to="/"
-          className="text-xs tracking-widest uppercase font-bold text-outline hover:text-primary transition-colors"
+          className="text-[10px] tracking-[0.2em] uppercase font-bold text-outline hover:text-primary transition-colors flex items-center gap-2"
         >
-          Exit Blog
+          <ChevronLeft className="w-3 h-3" /> Portfolio
         </Link>
       </div>
 
-      <div className="grid gap-12">
-        {BLOG_POSTS.map((post) => (
+      <div className="grid gap-px bg-outline-variant/10 border border-outline-variant/10 rounded-2xl overflow-hidden">
+        {BLOG_POSTS.map((post, index) => (
           <motion.div 
             key={post.id}
-            whileHover={{ x: 10 }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: index * 0.1 }}
             onClick={() => navigate(`/blogs/${post.slug}`)}
-            className="group cursor-pointer border-l border-outline-variant pl-8 py-4 hover:border-primary transition-colors"
+            className="group cursor-pointer bg-surface p-8 md:p-12 hover:bg-surface-high transition-all flex flex-col md:flex-row gap-8 items-start active:translate-y-0.5"
           >
-            <div className="flex items-center gap-4 text-[10px] text-outline uppercase tracking-widest mb-4">
-              <span className="flex items-center gap-1"><Calendar className="w-3 h-3" /> {post.date}</span>
-              <span className="flex items-center gap-1"><Clock className="w-3 h-3" /> {post.readTime}</span>
+            <div className="md:w-32 pt-1">
+              <span className="text-[10px] font-mono text-outline uppercase tracking-widest block mb-2">{post.date}</span>
+              <span className="flex items-center gap-1.5 text-[10px] text-primary/60 uppercase tracking-widest">
+                <Clock className="w-3 h-3" /> {post.readTime}
+              </span>
             </div>
-            <h2 className="text-2xl font-bold mb-4 group-hover:text-accent-blue transition-colors">{post.title}</h2>
-            <p className="text-on-surface-variant font-light leading-relaxed max-w-2xl">{post.excerpt}</p>
-            <div className="mt-6 flex items-center gap-2 text-accent-blue text-xs font-bold uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity">
-              Read Post <ArrowUpRight className="w-3 h-3" />
+            
+            <div className="flex-1">
+              <h2 className="text-2xl md:text-3xl font-bold mb-4 group-hover:text-primary transition-colors leading-tight">
+                {post.title}
+              </h2>
+              <p className="text-on-surface-variant font-light leading-relaxed max-w-2xl mb-8 line-clamp-2">
+                {post.excerpt}
+              </p>
+              
+              <div className="flex items-center gap-4">
+                <div className="h-px bg-outline-variant flex-1 group-hover:bg-primary/20 transition-colors"></div>
+                <span className="text-accent-blue text-[10px] font-bold uppercase tracking-widest flex items-center gap-2 whitespace-nowrap">
+                  Read Analysis <ArrowUpRight className="w-3 h-3 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                </span>
+              </div>
             </div>
           </motion.div>
         ))}
