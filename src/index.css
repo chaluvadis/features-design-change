@@ -51,6 +51,21 @@
   .project-card {
     @apply bg-surface-low border border-outline-variant p-8 rounded-xl hover:border-primary/20 transition-all duration-300;
   }
+
+  /* Markdown custom styles */
+  .custom-markdown {
+    @apply text-on-surface/90 leading-relaxed;
+  }
+
+  .custom-markdown h1 { @apply text-4xl font-bold mb-8 mt-12; }
+  .custom-markdown h2 { @apply text-2xl font-bold mb-6 mt-10; }
+  .custom-markdown h3 { @apply text-xl font-bold mb-4 mt-8; }
+  .custom-markdown p { @apply mb-6 font-light; }
+  .custom-markdown ul { @apply list-disc list-inside mb-6 space-y-2 font-light; }
+  .custom-markdown code { @apply px-1.5 py-0.5 bg-surface-high rounded-sm font-mono text-sm text-accent-blue; }
+  .custom-markdown pre { @apply p-6 bg-surface-container rounded-xl border border-outline-variant mb-8 overflow-x-auto; }
+  .custom-markdown pre code { @apply p-0 bg-transparent text-on-surface; }
+  .custom-markdown blockquote { @apply border-l-2 border-primary/20 pl-6 italic text-on-surface-variant mb-8; }
 }
 
 /* Custom scrollbar */
